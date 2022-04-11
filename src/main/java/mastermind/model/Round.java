@@ -1,7 +1,6 @@
 package mastermind.model;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 public class Round {
     int id;    
@@ -9,7 +8,7 @@ public class Round {
     LocalDateTime timeOfGuess;
     int numExactMatch; 
     int numPartialMatch;
-    String result;  // result -> e:0:p:0
+    String result; 
     int gameId;
     
     public int getId() {
