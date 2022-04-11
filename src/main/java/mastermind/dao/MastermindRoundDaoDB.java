@@ -50,16 +50,16 @@ public class MastermindRoundDaoDB implements MastermindRoundDao {
         return round;
     }
 
-    // @Override
-    // public void updateRound(Round round) {
-    //     final String UPDATE_ROUND = "UPDATE round SET guess = ?, timeOfGuess = ?, result = ?, gameId = ? WHERE id = ?";
-    //     jdbc.update(UPDATE_ROUND,
-    //             round.getGuess(),
-    //             round.getTimeOfGuess(),
-    //             round.getResult(),
-    //             round.getGameId(),
-    //             round.getId());
-    // }
+    @Override
+    public void updateRound(Round round) {
+        final String UPDATE_ROUND = "UPDATE round SET guess = ?, timeOfGuess = ?, result = ?, gameId = ? WHERE id = ?";
+        jdbc.update(UPDATE_ROUND,
+                round.getGuess(),
+                round.getTimeOfGuess(),
+                round.getResult(),
+                round.getGameId(),
+                round.getId());
+    }
 
     @Override
     @Transactional
