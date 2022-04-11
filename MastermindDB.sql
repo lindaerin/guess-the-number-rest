@@ -1,0 +1,16 @@
+DROP DATABASE IF EXISTS MastermindDB;
+CREATE DATABASE MAstermindDB;
+USE MastermindDB;
+
+CREATE TABLE game(
+id INT PRIMARY KEY AUTO_INCREMENT,
+answer CHAR(4),
+finished BOOLEAN);
+
+CREATE TABLE round(
+id INT PRIMARY KEY AUTO_INCREMENT,
+guess CHAR(4),
+timeOfGuess DATETIME,
+result VARCHAR(20),
+gameId INT,
+FOREIGN KEY (gameId) REFERENCES game(id));
