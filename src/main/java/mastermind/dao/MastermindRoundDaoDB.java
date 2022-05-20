@@ -73,7 +73,6 @@ public class MastermindRoundDaoDB implements MastermindRoundDao {
         @Override
         public Round mapRow(ResultSet rs, int index) throws SQLException {
             Round round = new Round();
-            // names: id, guess, timeOfGuess, result, gameId
             round.setId(rs.getInt("id"));
             round.setGuess(rs.getString("guess"));
             round.setTimeOfGuess((rs.getTimestamp("timeOfGuess").toLocalDateTime()));

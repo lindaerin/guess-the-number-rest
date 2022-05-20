@@ -21,19 +21,20 @@ import mastermind.service.InvalidGuessException;
 import mastermind.service.MastermindService;
 
 @RestController
-@RequestMapping("/api/mastermind")
+@RequestMapping("/api")
 public class MastermindController {
 
     private final MastermindService service;
 
-    public MastermindController(MastermindService service){
+    public MastermindController(MastermindService service) {
         this.service = service;
     }
-    
+
     @PostMapping("/begin")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity beginGame(){
-        // "begin" - POST – Starts a game, generates an answer, and sets the correct status.
+    public ResponseEntity beginGame() {
+        // "begin" - POST – Starts a game, generates an answer, and sets the correct
+        // status.
         // Should return a 201 CREATED message
 
         Game game = new Game();
@@ -42,7 +43,7 @@ public class MastermindController {
         game.setAnswer(service.generateAnswer());
         game.setFinished(false);
         service.addGame(game);
-        
+
         String message = "New game created: Game Id #: " + game.getGameId();
 
         System.out.println("Number:" + game.getAnswer());
@@ -51,8 +52,9 @@ public class MastermindController {
 
     @GetMapping("/game")
     public List<Game> getAllGames() {
-        // game" – GET – Returns a list of all games. Be sure in-progress games do not display their answer.
-        
+        // game" – GET – Returns a list of all games. Be sure in-progress games do not
+        // display their answer.
+
         List<Game> games = service.getAllGames();
         for (Game game : games) {
 
@@ -64,9 +66,11 @@ public class MastermindController {
     }
 
     @GetMapping("/game/{gameId}")
-    // game/{gameId}" - GET – Returns a specific game based on ID. Be sure in-progress games do not display their answer.
-    public ResponseEntity<Game>  getGameById(@PathVariable int gameId) {
+    // game/{gameId}" - GET – Returns a specific game based on ID. Be sure
+    // in-progress games do not display their answer.
+    public ResponseEntity<Game> getGameById(@PathVariable int gameId) {
         String message = String.format("Game #%s does not exist. ", gameId);
+
         Game game = service.getGameById(gameId);
         if (game == null) {
             return new ResponseEntity(message, HttpStatus.NOT_FOUND);
@@ -84,14 +88,14 @@ public class MastermindController {
     public ResponseEntity<Round> create(@RequestBody Round round) throws InvalidGuessException {
 
         round.setTimeOfGuess(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
-        
+
         Game game = service.getGameById(round.getGameId());
 
         if (game == null) {
             return new ResponseEntity("Game not found.", HttpStatus.NOT_FOUND);
         }
 
-        if (game.isFinished()){
+        if (game.isFinished()) {
             return new ResponseEntity("You cannot guess for a finished game.", HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
@@ -103,6 +107,7 @@ public class MastermindController {
         if (round.getNumExactMatch() == 4) {
             game.setFinished(true);
             service.updateGame(game);
+            service.updateRound(round);
         }
         service.addRound(round);
         return ResponseEntity.ok(round);

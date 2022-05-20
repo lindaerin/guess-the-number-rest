@@ -26,6 +26,8 @@ public class MastermindService {
     // generate string of random unique 4 digit number
     public String generateAnswer() {
         ArrayList<Integer> list = new ArrayList<Integer>();
+
+        // add number 0-9 to list
         for (int i = 0; i < 9; i++) {
             list.add(i);
         }
@@ -91,10 +93,9 @@ public class MastermindService {
         return roundDao.addRound(round);
     }
 
-    // public void editRound(Round round) throws InvalidGuessException {
-    //     validateGuess(round);
-    //     roundDao.updateRound(round);
-    // }
+    public void updateRound(Round round) throws InvalidGuessException {
+        roundDao.updateRound(round);
+    }
 
     public List<Round> getAllRounds() {
         return roundDao.getAllRounds();
